@@ -1,0 +1,645 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { HERO_IMAGE_URL, acquisitionMailto } from '../lib/constants';
+import { getCollection } from 'astro:content';
+
+const useCases = await getCollection('useCases');
+useCases.sort((a, b) => a.data.order - b.data.order);
+
+function iconSvg(icon: string) {
+  switch (icon) {
+    case 'brain':
+      return `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17.684a4.002 4.002 0 01-7.326 0M9.663 17.684L12 21m-2.337-3.316l.663-1.316M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a4.002 4.002 0 01-7.326 0" />`;
+    case 'layers':
+      return `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2 2 2 0 012 2v2a2 2 0 01-2 2" />`;
+    case 'globe':
+      return `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />`;
+    case 'chip':
+      return `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />`;
+    case 'pencil':
+      return `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />`;
+    case 'chart':
+      return `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />`;
+    default:
+      return `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />`;
+  }
+}
+---
+
+<BaseLayout>
+  <Nav />
+
+  <main>
+    <!-- Hero Section -->
+    <header
+      class="hero-bg min-h-[100dvh] flex items-center relative pt-20"
+      style={`--hero-image-url: url(${HERO_IMAGE_URL});`}
+    >
+      <div class="max-w-5xl mx-auto px-6 pb-16 pt-12 md:pt-8 text-center relative z-10">
+        <!-- Premium Badge -->
+        <div
+          class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 mb-8"
+        >
+          <div class="w-1.5 h-1.5 bg-[#22f5ff] rounded-full animate-pulse"></div>
+          <span class="text-xs font-semibold tracking-[1.5px] text-white/80"
+            >PREMIUM AI DOMAIN</span
+          >
+        </div>
+
+        <!-- Domain Name -->
+        <h1 class="domain-text font-display mb-3 tracking-[-0.07em]">
+          aipolyintelligence.com
+        </h1>
+
+        <!-- Tagline -->
+        <p
+          class="max-w-2xl mx-auto text-3xl md:text-4xl font-light tracking-tight text-white/90 mb-4"
+        >
+          The next evolution of<br />
+          artificial intelligence.
+        </p>
+
+        <p class="max-w-lg mx-auto text-xl text-white/70 mb-10">
+          Polyintelligence — where multiple forms of intelligence converge.<br />
+          A rare domain for those building what comes after narrow AI.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href={acquisitionMailto()}
+            class="group w-full sm:w-auto inline-flex items-center justify-center gap-x-3 px-9 py-4 text-lg font-semibold rounded-3xl bg-gradient-to-r from-[#22f5ff] to-[#a855f7] text-[#0a0a0f] hover:brightness-105 active:scale-[0.985] transition-all shadow-xl shadow-[#22f5ff]/20"
+          >
+            <span>Secure This Asset</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 group-hover:translate-x-0.5 transition-transform"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2.25"
+                d="M14 5l7 7-7 7m-4-7h11"
+              />
+            </svg>
+          </a>
+          <a
+            href="#positioning"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-x-2 px-8 py-4 text-lg font-medium rounded-3xl border border-white/20 hover:bg-white/5 transition-colors"
+          >
+            Explore the Vision
+          </a>
+        </div>
+
+        <div class="mt-12 flex items-center justify-center gap-x-8 text-xs text-white/50">
+          <div class="flex items-center gap-x-1.5">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                d="M5 10l7-7m0 0l7 7"
+              />
+            </svg>
+            <span>Instant Transfer</span>
+          </div>
+          <div>Escrow Protected</div>
+          <div>High-Value Asset</div>
+        </div>
+      </div>
+
+      <!-- Subtle scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:block">
+        <div
+          class="flex flex-col items-center gap-y-1 text-[10px] tracking-widest text-white/40"
+        >
+          <div>SCROLL TO BEGIN</div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4 animate-bounce"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 14l-7 7m0 0l-7-7"
+            />
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- The Positioning Section -->
+    <section id="positioning" class="max-w-5xl mx-auto px-6 pt-20 pb-16">
+      <div class="grid md:grid-cols-12 gap-x-12 items-center">
+        <!-- Left content -->
+        <div class="md:col-span-7">
+          <div
+            class="inline-block px-3.5 py-1 rounded-full bg-white/5 text-xs tracking-[1.5px] font-medium text-white/60 mb-4"
+          >
+            THE POSITIONING
+          </div>
+
+          <h2 class="section-header tracking-[-0.04em] leading-none mb-7">
+            Beyond narrow AI.<br />
+            Toward polyintelligence.
+          </h2>
+
+          <div class="space-y-6 text-lg text-white/80 max-w-[42ch]">
+            <p>
+              The current era of artificial intelligence is defined by powerful but narrow
+              systems — excellent at specific tasks, yet limited in scope and adaptability.
+            </p>
+            <p>
+              <span class="font-semibold text-white">aipolyintelligence.com</span> points to
+              what comes next: systems capable of integrating multiple forms of intelligence
+              — reasoning, creativity, perception, planning, and adaptation — into cohesive,
+              more general capabilities.
+            </p>
+            <p class="text-white/70">
+              This domain is for those building, researching, or investing in the future of
+              multi-dimensional, polyintelligent AI.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right visual card -->
+        <div class="md:col-span-5 mt-10 md:mt-0">
+          <div class="glass rounded-3xl p-9 md:p-10 border border-white/10">
+            <div class="text-center">
+              <div
+                class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-[#22f5ff20] to-[#a855f720] border border-white/20 mb-6"
+              >
+                <span
+                  class="font-display text-base font-bold tracking-[-0.5px] bg-gradient-to-br from-[#22f5ff] to-[#a855f7] bg-clip-text text-transparent"
+                  >POLY</span
+                >
+              </div>
+
+              <div class="space-y-1">
+                <div class="text-3xl font-bold tracking-tighter">Intelligence</div>
+                <div class="text-sm text-white/60 tracking-[2px] mt-1">
+                  MULTI-FORM · ADAPTIVE · GENERAL
+                </div>
+              </div>
+
+              <div
+                class="mt-8 pt-6 border-t border-white/10 text-sm text-white/60 leading-relaxed"
+              >
+                The domain that names<br />
+                the next chapter of AI.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why This Domain Section -->
+    <section id="why" class="bg-white/5 border-y border-white/10 py-16">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <div
+            class="inline-block px-4 py-1 rounded-full bg-white/5 text-xs tracking-[1.5px] font-medium text-white/60 mb-3"
+          >
+            WHY THIS DOMAIN
+          </div>
+          <h2 class="section-header tracking-[-0.03em]">
+            Forward-looking. Sophisticated. Rare.
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5">
+          <!-- Card 1 -->
+          <div class="modern-card glass rounded-3xl p-8 border border-white/10">
+            <div
+              class="w-11 h-11 rounded-2xl bg-[#22f5ff]/10 flex items-center justify-center mb-6"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6 text-[#22f5ff]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                />
+              </svg>
+            </div>
+            <h3 class="font-semibold text-xl tracking-tight mb-3">
+              Owns the Narrative
+            </h3>
+            <p class="text-white/70 leading-relaxed">
+              <span class="font-medium">aipolyintelligence.com</span> directly names the
+              emerging concept of polyintelligence. It positions its owner at the forefront
+              of the conversation about what comes after today's narrow AI systems.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="modern-card glass rounded-3xl p-8 border border-white/10">
+            <div
+              class="w-11 h-11 rounded-2xl bg-[#a855f7]/10 flex items-center justify-center mb-6"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6 text-[#a855f7]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9.663 17.684a4.002 4.002 0 01-7.326 0M9.663 17.684L12 21m-2.337-3.316l.663-1.316M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a4.002 4.002 0 01-7.326 0"
+                />
+              </svg>
+            </div>
+            <h3 class="font-semibold text-xl tracking-tight mb-3">
+              Memorable &amp; Visionary
+            </h3>
+            <p class="text-white/70 leading-relaxed">
+              The name is distinctive, intellectually resonant, and easy to remember. It
+              immediately signals depth and ambition — perfect for research labs, advanced AI
+              companies, or thought leadership platforms.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="modern-card glass rounded-3xl p-8 border border-white/10">
+            <div
+              class="w-11 h-11 rounded-2xl bg-emerald-400/10 flex items-center justify-center mb-6"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6 text-emerald-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2 2 2 0 012 2v2a2 2 0 01-2 2"
+                />
+              </svg>
+            </div>
+            <h3 class="font-semibold text-xl tracking-tight mb-3">
+              High Strategic Value
+            </h3>
+            <p class="text-white/70 leading-relaxed">
+              As the field moves beyond narrow AI toward more general and adaptable systems,
+              owning a domain that explicitly names this direction is a powerful long-term
+              brand and investment asset.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ideal For / Use Cases -->
+    <section id="uses" class="max-w-6xl mx-auto px-6 py-20">
+      <div class="max-w-2xl mb-12">
+        <div
+          class="inline-block px-3.5 py-1 rounded-full bg-white/5 text-xs tracking-[1.5px] font-medium text-white/60 mb-4"
+        >
+          IDEAL FOR
+        </div>
+        <h2 class="section-header tracking-[-0.035em] leading-none">
+          For those building what comes next.
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {
+          useCases.map((uc) => (
+            <div
+              class="group p-7 rounded-3xl border border-white/10 hover:border-white/20 transition-colors bg-white/[0.015]"
+            >
+              <div class="font-mono text-xs tracking-widest text-[#22f5ff] mb-2">
+                {String(uc.data.order).padStart(2, '0')}
+              </div>
+              <div
+                class="font-semibold text-lg mb-2 group-hover:text-[#22f5ff] transition-colors"
+              >
+                {uc.data.title}
+              </div>
+              <p class="text-sm text-white/60">{uc.data.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Poignant Closer -->
+    <div class="max-w-3xl mx-auto px-6 text-center py-8 border-y border-white/10">
+      <p class="text-2xl md:text-3xl font-light tracking-tight text-white/90">
+        The future of intelligence<br />
+        will not be narrow.<br />
+        <span class="font-semibold text-white">It will be poly.</span>
+      </p>
+    </div>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="max-w-4xl mx-auto px-6 py-20">
+      <div class="text-center mb-10">
+        <div
+          class="inline-block px-4 py-1 rounded-full bg-emerald-400/10 text-emerald-400 text-xs tracking-[1.5px] font-semibold mb-4"
+        >
+          HIGH-VALUE ACQUISITION
+        </div>
+        <h2 class="section-header tracking-[-0.03em]">
+          A rare domain for a rare vision.
+        </h2>
+      </div>
+
+      <div class="glass rounded-3xl p-10 md:p-14 border border-white/10">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-8">
+          <div>
+            <div class="flex items-baseline gap-x-2">
+              <span class="text-6xl md:text-7xl font-semibold tracking-tighter"
+                >$19,997</span
+              >
+              <span class="text-white/50 text-xl">USD</span>
+            </div>
+            <p class="mt-1 text-white/60">
+              One-time acquisition · Full ownership &amp; instant transfer
+            </p>
+
+            <div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+              <div class="flex items-center gap-x-2 text-white/70">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4 text-emerald-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="3"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span>Clean title, ready for transfer</span>
+              </div>
+              <div class="flex items-center gap-x-2 text-white/70">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4 text-emerald-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="3"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span>Escrow.com protected transaction</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="md:text-right">
+            <a
+              href={acquisitionMailto()}
+              class="inline-flex w-full md:w-auto items-center justify-center px-10 py-4 rounded-3xl bg-white font-semibold text-[#0a0a0f] text-lg active:scale-[0.985] transition-all hover:bg-white/90"
+            >
+              Begin Acquisition
+            </a>
+            <p class="text-xs text-white/50 mt-3 md:mt-2">
+              Serious buyers only. Flexible terms available.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 text-center">
+        <p class="text-xs text-white/50 max-w-md mx-auto">
+          Forward-looking domains that name emerging technological paradigms are
+          exceptionally rare. This asset offers both immediate brand power and long-term
+          strategic positioning in the future of AI.
+        </p>
+      </div>
+    </section>
+
+    <!-- Inquiry / Contact Section -->
+    <section id="inquire" class="bg-white/5 border-t border-white/10 py-16">
+      <div class="max-w-2xl mx-auto px-6">
+        <div class="text-center mb-10">
+          <h2 class="text-4xl font-semibold tracking-tight">
+            Ready to own the future of polyintelligence?
+          </h2>
+          <p class="mt-3 text-white/70">
+            Submit your inquiry. We respond personally to serious buyers within 24 hours.
+          </p>
+        </div>
+
+        <!-- Form -->
+        <form
+          id="inquiry-form"
+          class="glass rounded-3xl p-8 md:p-10 border border-white/10 space-y-6"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label
+                class="block text-xs tracking-widest font-medium text-white/60 mb-1.5"
+                >FULL NAME</label
+              >
+              <input
+                type="text"
+                id="name"
+                required
+                class="form-input w-full bg-white/5 border border-white/15 rounded-2xl px-5 py-3.5 text-white placeholder:text-white/40 focus:border-[#22f5ff]/60"
+              />
+            </div>
+            <div>
+              <label
+                class="block text-xs tracking-widest font-medium text-white/60 mb-1.5"
+                >EMAIL ADDRESS</label
+              >
+              <input
+                type="email"
+                id="email"
+                required
+                class="form-input w-full bg-white/5 border border-white/15 rounded-2xl px-5 py-3.5 text-white placeholder:text-white/40 focus:border-[#22f5ff]/60"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs tracking-widest font-medium text-white/60 mb-1.5"
+              >ORGANIZATION OR INTENDED USE (OPTIONAL)</label
+            >
+            <input
+              type="text"
+              id="org"
+              class="form-input w-full bg-white/5 border border-white/15 rounded-2xl px-5 py-3.5 text-white placeholder:text-white/40 focus:border-[#22f5ff]/60"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label
+                class="block text-xs tracking-widest font-medium text-white/60 mb-1.5"
+                >YOUR OFFER (OPTIONAL)</label
+              >
+              <div class="relative">
+                <span class="absolute left-5 top-1/2 -translate-y-1/2 text-white/40">$</span>
+                <input
+                  type="text"
+                  id="offer"
+                  placeholder="19997"
+                  class="form-input w-full bg-white/5 border border-white/15 rounded-2xl pl-8 pr-5 py-3.5 text-white placeholder:text-white/40 focus:border-[#22f5ff]/60"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                class="block text-xs tracking-widest font-medium text-white/60 mb-1.5"
+                >TIMELINE</label
+              >
+              <select
+                id="timeline"
+                class="form-input w-full bg-white/5 border border-white/15 rounded-2xl px-5 py-[15px] text-white focus:border-[#22f5ff]/60"
+              >
+                <option value="">Select preferred timeline</option>
+                <option value="immediate">Immediate (within 7 days)</option>
+                <option value="2weeks">Within 2 weeks</option>
+                <option value="month">Within 30 days</option>
+                <option value="flexible">Flexible / exploring</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs tracking-widest font-medium text-white/60 mb-1.5"
+              >MESSAGE OR QUESTIONS</label
+            >
+            <textarea
+              id="message"
+              rows="4"
+              placeholder="What is your vision for aipolyintelligence.com?"
+              class="form-input w-full bg-white/5 border border-white/15 rounded-3xl px-5 py-4 text-white placeholder:text-white/40 focus:border-[#22f5ff]/60 resize-y min-h-[110px]"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full py-4 rounded-3xl bg-gradient-to-r from-[#22f5ff] to-[#a855f7] font-semibold text-[#0a0a0f] text-lg tracking-[-0.2px] active:scale-[0.985] transition-all hover:brightness-105"
+          >
+            Submit Secure Inquiry
+          </button>
+
+          <p class="text-center text-[10px] text-white/50 tracking-wide">
+            Your information is kept confidential. All transactions protected via escrow.
+          </p>
+        </form>
+
+        <!-- Success Message (hidden by default) -->
+        <div
+          id="success-message"
+          class="hidden mt-6 glass rounded-3xl p-8 border border-emerald-400/30 text-center"
+        >
+          <div
+            class="mx-auto w-14 h-14 rounded-full bg-emerald-400/10 flex items-center justify-center mb-5"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-7 h-7 text-emerald-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2.5"
+                d="M5 10l7-7m0 0l7 7"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 21V3"
+              />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold tracking-tight mb-2">Inquiry Received</h3>
+          <p class="text-white/70 max-w-xs mx-auto">
+            Thank you. A member of our team will personally respond within 24 hours to
+            discuss next steps.
+          </p>
+          <button
+            id="reset-form-btn"
+            class="mt-6 text-sm font-medium text-white/60 hover:text-white underline underline-offset-4"
+          >
+            Submit another inquiry
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('inquiry-form');
+  const successMsg = document.getElementById('success-message');
+  const resetBtn = document.getElementById('reset-form-btn');
+
+  form?.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn?.innerHTML ?? '';
+    if (submitBtn) {
+      submitBtn.innerHTML = 'Processing...';
+      submitBtn.disabled = true;
+    }
+
+    setTimeout(() => {
+      if (form) form.style.display = 'none';
+      successMsg?.classList.remove('hidden');
+      successMsg?.classList.add('block');
+    }, 850);
+  });
+
+  resetBtn?.addEventListener('click', () => {
+    successMsg?.classList.add('hidden');
+    successMsg?.classList.remove('block');
+    if (form) {
+      form.style.display = 'block';
+      form.reset();
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Submit Secure Inquiry';
+      }
+    }
+  });
+</script>

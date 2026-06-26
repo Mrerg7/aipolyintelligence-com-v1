@@ -1,0 +1,8 @@
+{
+  "title": "AI Infrastructure & Platforms",
+  "tag": "ENABLING LAYER",
+  "description": "Excellent for platforms that enable the composition of multiple AI models, agents, or capabilities into more powerful, polyintelligent systems.",
+  "icon": "chip",
+  "gradient": "from-[#22f5ff] to-emerald-400",
+  "order": 4
+}
