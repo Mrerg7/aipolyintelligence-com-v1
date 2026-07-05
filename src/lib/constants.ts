@@ -1,5 +1,17 @@
 export const SITE_URL = 'https://aipolyintelligence.com';
 export const SITE_NAME = 'aipolyintelligence.com';
+
+/** Canonical URL for a pathname (trailing slash, apex HTTPS). */
+export function getCanonicalUrl(pathname: string): string {
+  let path = pathname || '/';
+  if (path.endsWith('/index.html')) {
+    path = path.slice(0, -'index.html'.length) || '/';
+  }
+  if (path !== '/' && !path.endsWith('/')) {
+    path = `${path}/`;
+  }
+  return new URL(path, SITE_URL).href;
+}
 export const ACQUISITION_EMAIL = 'sales@desertrich.com';
 
 /** Cloudflare Images CDN — hero / OG */
