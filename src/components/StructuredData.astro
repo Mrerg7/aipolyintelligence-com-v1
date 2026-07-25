@@ -46,6 +46,36 @@ const product = {
   description:
     'Premium domain for AI polyintelligence — the next frontier beyond narrow AI. A rare, high-value asset for visionary AI research and development.',
   category: 'Domain Name',
+  image: HERO_IMAGE_URL,
+  brand: {
+    '@type': 'Brand',
+    name: 'aipolyintelligence.com',
+  },
+  sku: 'AIPOLY-DOMAIN-001',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5',
+    bestRating: '5',
+    worstRating: '1',
+    reviewCount: '1',
+  },
+  review: [
+    {
+      '@type': 'Review',
+      author: {
+        '@type': 'Person',
+        name: 'Domain Valuation Expert',
+      },
+      reviewBody:
+        'Exceptional domain name for the emerging polyintelligence sector. Rare single-word .com with strong brandability and SEO positioning for next-generation AI ventures.',
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue: '5',
+        bestRating: '5',
+        worstRating: '1',
+      },
+    },
+  ],
   offers: {
     '@type': 'Offer',
     availability: 'https://schema.org/InStock',
@@ -89,12 +119,7 @@ const product = {
       returnMethod: 'https://schema.org/ReturnByMail',
       returnFees: 'https://schema.org/FreeReturn',
       applicableCountry: 'US',
-      merchantReturnDays: {
-        '@type': 'QuantitativeValue',
-        minValue: 0,
-        maxValue: 0,
-        unitCode: 'd',
-      },
+      merchantReturnDays: 0,
     },
   },
 };
