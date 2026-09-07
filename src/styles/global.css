@@ -43,7 +43,12 @@
     background-image: linear-gradient(rgba(10, 10, 15, 0.62), rgba(10, 10, 15, 0.7)), var(--hero-image-url);
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+  }
+
+  @media (min-width: 768px) {
+    .hero-bg {
+      background-attachment: fixed;
+    }
   }
 
   .glass {

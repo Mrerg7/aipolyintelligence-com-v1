@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aipolyintelligence.com/sitemap-index.xml
+Sitemap: https://aipolyintelligence.com/sitemap.xml
