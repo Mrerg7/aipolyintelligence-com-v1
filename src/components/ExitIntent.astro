@@ -9,12 +9,14 @@ import {
 
 <div
   id="exit-intent"
-  class="hidden fixed inset-0 z-[60] items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+  class="hidden fixed inset-0 z-[60] items-center justify-center p-4 bg-[color-mix(in_oklab,var(--color-bg)_55%,black)] backdrop-blur-md"
   role="dialog"
   aria-modal="true"
   aria-labelledby="exit-intent-title"
 >
-  <div class="glass relative w-full max-w-md rounded-3xl p-8 border border-[color:var(--color-border)] shadow-2xl">
+  <div
+    class="exit-panel relative w-full max-w-md rounded-3xl p-8 border border-[color:var(--color-border)] shadow-2xl"
+  >
     <button
       id="exit-intent-close"
       type="button"
@@ -26,13 +28,13 @@ import {
       </svg>
     </button>
 
-    <p class="text-[10px] uppercase tracking-[2px] font-bold text-[var(--color-neon)] mb-3">
+    <p class="text-[11px] uppercase tracking-[2px] font-bold text-[var(--color-neon)] mb-3">
       Exclusive acquisition offer
     </p>
-    <h2 id="exit-intent-title" class="text-2xl font-semibold tracking-tight mb-2">
+    <h2 id="exit-intent-title" class="text-2xl font-semibold tracking-tight mb-2 text-[color:var(--color-fg)]">
       Before you go — claim buyer priority
     </h2>
-    <p class="text-sm text-[color:var(--color-muted)] mb-6">
+    <p class="text-base text-[color:var(--color-muted)] mb-6 leading-relaxed">
       Get first-look terms on <strong class="text-[color:var(--color-fg)]">{DOMAIN_NAME}</strong>
       ({DOMAIN_PRICE_DISPLAY}). Leave your email and we’ll reply within 24 hours with escrow options.
     </p>
@@ -46,19 +48,19 @@ import {
         required
         autocomplete="email"
         placeholder="you@company.com"
-        class="form-input w-full rounded-2xl px-4 py-3 border"
+        class="form-input exit-input w-full rounded-2xl px-4 py-3 border text-base"
       />
-      <button type="submit" class="w-full min-h-12 rounded-2xl btn-primary px-4 py-3">
+      <button type="submit" class="w-full min-h-12 rounded-2xl btn-primary px-4 py-3 text-base">
         Get priority terms
       </button>
     </form>
 
-    <p class="mt-4 text-center text-xs text-[color:var(--color-muted)]">
-      Or <a href={makeOfferMailto()} class="underline underline-offset-2">make an offer now</a>
+    <p class="mt-4 text-center text-sm text-[color:var(--color-muted)]">
+      Or <a href={makeOfferMailto()} class="text-[color:var(--color-fg)] underline underline-offset-2">make an offer now</a>
       · {ACQUISITION_EMAIL}
     </p>
 
-    <div id="exit-intent-success" class="hidden mt-4 text-center text-sm text-emerald-400">
+    <div id="exit-intent-success" class="hidden mt-4 text-center text-sm text-emerald-500 font-medium">
       Priority request received. Check your inbox — we respond within 24 hours.
     </div>
   </div>

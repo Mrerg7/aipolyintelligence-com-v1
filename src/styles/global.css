@@ -212,4 +212,30 @@ html[data-theme="light"] {
     font-size: 0.75rem;
     color: var(--color-muted);
   }
+
+  /* Opaque panel so exit-intent copy stays legible over the hero */
+  .exit-panel {
+    background: color-mix(in oklab, var(--color-bg) 96%, var(--color-fg));
+    color: var(--color-fg);
+    box-shadow:
+      0 25px 50px -12px rgb(0 0 0 / 0.55),
+      0 0 0 1px color-mix(in oklab, var(--color-fg) 8%, transparent);
+  }
+
+  html[data-theme="light"] .exit-panel {
+    background: #ffffff;
+    box-shadow:
+      0 25px 50px -12px rgb(12 16 32 / 0.28),
+      0 0 0 1px rgb(12 16 32 / 0.08);
+  }
+
+  .exit-input {
+    background: color-mix(in oklab, var(--color-fg) 6%, var(--color-bg)) !important;
+    color: var(--color-fg) !important;
+    border-color: color-mix(in oklab, var(--color-fg) 22%, transparent) !important;
+  }
+
+  .exit-input::placeholder {
+    color: color-mix(in oklab, var(--color-fg) 45%, transparent);
+  }
 }
