@@ -1,5 +1,10 @@
 # Changelog
 
+## [FIX]: Exit-intent popup legibility — 2026-09-29
+
+- Replaced translucent `.glass` panel with opaque `.exit-panel` (solid dark / white)
+- Raised body copy to 16px, strengthened input/placeholder contrast
+
 ## [FIX]: Mobile nav hamburger — 2026-09-29
 
 - Header Buy Now / Make Offer now `lg+` only so they no longer collide with the hamburger on narrow viewports
