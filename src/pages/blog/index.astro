@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import ExitIntent from '../../components/ExitIntent.astro';
+import { getCollection } from 'astro:content';
+import { SEO, BRAND } from '../../lib/constants';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title={`Domain Insights & Guides | ${SEO.title}`}
+  description="Weekly domain valuation guides, AI marketplace trends, and acquisition success stories from Desert Rich Domains."
+>
+  <Nav />
+  <main id="main-content" class="pt-28 pb-16">
+    <div class="max-w-4xl mx-auto px-6">
+      <p class="text-xs tracking-[2px] uppercase text-[var(--color-neon)] font-semibold mb-3">
+        Content marketing · {BRAND}
+      </p>
+      <h1 class="section-header mb-4">Domain insights for serious buyers</h1>
+      <p class="text-[color:var(--color-muted)] text-lg max-w-2xl mb-12">
+        Valuation frameworks, market trends, and case studies for premium AI domains —
+        built to earn trust and high-quality backlinks.
+      </p>
+
+      <div class="space-y-5">
+        {
+          posts.map((post) => (
+            <a
+              href={`/blog/${post.id}/`}
+              class="reveal block glass rounded-3xl p-7 border border-[color:var(--color-border)] hover:border-[color:color-mix(in_oklab,var(--color-neon)_40%,transparent)] transition-colors"
+            >
+              <div class="flex flex-wrap items-center gap-3 text-xs text-[color:var(--color-muted)] mb-2">
+                <span class="uppercase tracking-wider text-[var(--color-neon)]">
+                  {post.data.category}
+                </span>
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })}
+                </time>
+              </div>
+              <h2 class="text-xl font-semibold tracking-tight mb-2">{post.data.title}</h2>
+              <p class="text-sm text-[color:var(--color-muted)]">{post.data.description}</p>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="mt-12 text-center">
+        <a href="/#pricing" class="inline-flex min-h-12 items-center btn-primary px-8 py-3 rounded-2xl"
+          >Back to domain listing</a
+        >
+      </div>
+    </div>
+  </main>
+  <Footer />
+  <ExitIntent />
+</BaseLayout>

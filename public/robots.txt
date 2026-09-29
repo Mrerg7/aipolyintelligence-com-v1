@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /404
+Disallow: /404.html
+
+User-agent: GPTBot
+Allow: /
 
 Sitemap: https://aipolyintelligence.com/sitemap.xml

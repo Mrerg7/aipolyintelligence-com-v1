@@ -1,0 +1,124 @@
+---
+import {
+  ACQUISITION_EMAIL,
+  DOMAIN_NAME,
+  DOMAIN_PRICE_DISPLAY,
+  makeOfferMailto,
+} from '../lib/constants';
+---
+
+<div
+  id="exit-intent"
+  class="hidden fixed inset-0 z-[60] items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="exit-intent-title"
+>
+  <div class="glass relative w-full max-w-md rounded-3xl p-8 border border-[color:var(--color-border)] shadow-2xl">
+    <button
+      id="exit-intent-close"
+      type="button"
+      class="absolute top-4 right-4 tap-target inline-flex items-center justify-center rounded-xl text-[color:var(--color-muted)] hover:text-[color:var(--color-fg)]"
+      aria-label="Close offer"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <p class="text-[10px] uppercase tracking-[2px] font-bold text-[var(--color-neon)] mb-3">
+      Exclusive acquisition offer
+    </p>
+    <h2 id="exit-intent-title" class="text-2xl font-semibold tracking-tight mb-2">
+      Before you go — claim buyer priority
+    </h2>
+    <p class="text-sm text-[color:var(--color-muted)] mb-6">
+      Get first-look terms on <strong class="text-[color:var(--color-fg)]">{DOMAIN_NAME}</strong>
+      ({DOMAIN_PRICE_DISPLAY}). Leave your email and we’ll reply within 24 hours with escrow options.
+    </p>
+
+    <form id="exit-intent-form" class="space-y-3">
+      <label class="sr-only" for="exit-email">Email</label>
+      <input
+        id="exit-email"
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        placeholder="you@company.com"
+        class="form-input w-full rounded-2xl px-4 py-3 border"
+      />
+      <button type="submit" class="w-full min-h-12 rounded-2xl btn-primary px-4 py-3">
+        Get priority terms
+      </button>
+    </form>
+
+    <p class="mt-4 text-center text-xs text-[color:var(--color-muted)]">
+      Or <a href={makeOfferMailto()} class="underline underline-offset-2">make an offer now</a>
+      · {ACQUISITION_EMAIL}
+    </p>
+
+    <div id="exit-intent-success" class="hidden mt-4 text-center text-sm text-emerald-400">
+      Priority request received. Check your inbox — we respond within 24 hours.
+    </div>
+  </div>
+</div>
+
+<script>
+  const KEY = 'aipoly_exit_shown';
+  const overlay = document.getElementById('exit-intent');
+  const closeBtn = document.getElementById('exit-intent-close');
+  const form = document.getElementById('exit-intent-form');
+  const success = document.getElementById('exit-intent-success');
+  let shown = false;
+
+  function openModal() {
+    if (shown || !overlay) return;
+    try {
+      if (sessionStorage.getItem(KEY)) return;
+      sessionStorage.setItem(KEY, '1');
+    } catch (_) {}
+    shown = true;
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+    document.getElementById('exit-email')?.focus();
+  }
+
+  function closeModal() {
+    overlay?.classList.add('hidden');
+    overlay?.classList.remove('flex');
+  }
+
+  document.addEventListener('mouseout', (e) => {
+    if (e.clientY <= 0) openModal();
+  });
+
+  // Mobile: show after meaningful engagement
+  setTimeout(() => {
+    if (window.matchMedia('(max-width: 768px)').matches && window.scrollY > 600) {
+      openModal();
+    }
+  }, 28000);
+
+  closeBtn?.addEventListener('click', closeModal);
+  overlay?.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const emailInput = document.getElementById('exit-email');
+    const email = emailInput instanceof HTMLInputElement ? emailInput.value : '';
+    if (!email) return;
+    const subject = encodeURIComponent('Priority buyer terms: aipolyintelligence.com');
+    const body = encodeURIComponent(
+      `Please send priority acquisition terms for aipolyintelligence.com.\n\nEmail: ${email}\n`,
+    );
+    window.location.href = `mailto:sales@desertrich.com?subject=${subject}&body=${body}`;
+    form.classList.add('hidden');
+    success?.classList.remove('hidden');
+  });
+</script>

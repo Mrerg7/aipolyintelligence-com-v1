@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import ExitIntent from '../../components/ExitIntent.astro';
+import { getCollection, render } from 'astro:content';
+import { SEO, DOMAIN_NAME, buyNowMailto } from '../../lib/constants';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts
+    .filter((p) => !p.data.draft)
+    .map((post) => ({
+      params: { slug: post.id },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const title = `${post.data.title} | ${DOMAIN_NAME}`;
+---
+
+<BaseLayout title={title} description={post.data.description} ogType="article">
+  <Nav />
+  <main id="main-content" class="pt-28 pb-16">
+    <article class="max-w-3xl mx-auto px-6">
+      <nav class="text-sm text-[color:var(--color-muted)] mb-8" aria-label="Breadcrumb">
+        <a href="/" class="hover:underline">Home</a>
+        <span class="mx-2">/</span>
+        <a href="/blog/" class="hover:underline">Blog</a>
+        <span class="mx-2">/</span>
+        <span>{post.data.category}</span>
+      </nav>
+
+      <p class="text-xs tracking-[2px] uppercase text-[var(--color-neon)] font-semibold mb-3">
+        {post.data.category}
+      </p>
+      <h1 class="section-header mb-4">{post.data.title}</h1>
+      <div class="flex flex-wrap gap-3 text-sm text-[color:var(--color-muted)] mb-10">
+        <time datetime={post.data.pubDate.toISOString()}>
+          {
+            post.data.pubDate.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+          }
+        </time>
+        {
+          post.data.tags.map((tag) => (
+            <span class="trust-pill !min-h-0 py-1">{tag}</span>
+          ))
+        }
+      </div>
+
+      <div
+        class="prose-domain space-y-5 text-[color:var(--color-muted)] text-lg leading-relaxed [&_h2]:text-[color:var(--color-fg)] [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:mt-10 [&_h2]:mb-3 [&_strong]:text-[color:var(--color-fg)] [&_a]:text-[var(--color-neon)] [&_a]:underline [&_a]:underline-offset-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6"
+      >
+        <Content />
+      </div>
+
+      <aside
+        class="mt-14 glass rounded-3xl p-8 border border-[color:var(--color-border)] text-center"
+      >
+        <h2 class="text-xl font-semibold mb-2">{DOMAIN_NAME} is for sale</h2>
+        <p class="text-sm text-[color:var(--color-muted)] mb-5">
+          Premium listing with Escrow.com protection. Buy now or make an offer.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href={buyNowMailto()} class="btn-primary min-h-12 inline-flex items-center justify-center px-6 py-3 rounded-2xl"
+            >Buy Now</a
+          >
+          <a
+            href="/#inquire"
+            class="min-h-12 inline-flex items-center justify-center px-6 py-3 rounded-2xl border border-[color:var(--color-border)]"
+            >Make Offer</a
+          >
+        </div>
+      </aside>
+    </article>
+  </main>
+  <Footer />
+  <ExitIntent />
+</BaseLayout>

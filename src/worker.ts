@@ -1,9 +1,8 @@
 /**
- * Canonical host + HTTPS enforcement, plus path aliases served without redirects.
+ * Canonical host + HTTPS enforcement, security headers, path aliases.
  *
  * Host variants (www / http) 301 to the apex HTTPS URL.
- * Path aliases (/sitemap.xml, /404*) are rewritten so Search Console does not
- * report soft-200s or crawler 404s for standard discovery URLs.
+ * Path aliases (/sitemap.xml, /404*) are rewritten for Search Console hygiene.
  */
 const CANONICAL_HOST = 'aipolyintelligence.com';
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
@@ -11,6 +10,16 @@ const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
 interface Env {
   ASSETS: Fetcher;
 }
+
+const SECURITY_HEADERS: Record<string, string> = {
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+  'X-Frame-Options': 'DENY',
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  'Cross-Origin-Opener-Policy': 'same-origin',
+  'X-DNS-Prefetch-Control': 'on',
+};
 
 function isAlternateHost(hostname: string): boolean {
   const host = hostname.toLowerCase();
@@ -29,7 +38,7 @@ function withHeaders(
   status?: number,
 ): Response {
   const headers = new Headers(response.headers);
-  for (const [key, value] of Object.entries(extra)) {
+  for (const [key, value] of Object.entries({ ...SECURITY_HEADERS, ...extra })) {
     headers.set(key, value);
   }
   return new Response(response.body, {
@@ -52,12 +61,16 @@ export default {
 
     const path = url.pathname;
 
-    // Common sitemap URL: serve the generated index without a 301
     if (path === '/sitemap.xml') {
-      return env.ASSETS.fetch(assetRequest(request, '/sitemap-index.xml'));
+      const response = await env.ASSETS.fetch(
+        assetRequest(request, '/sitemap-index.xml'),
+      );
+      return withHeaders(response, {
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600',
+      });
     }
 
-    // 404 document URLs: real 404 status, never a soft-200
     if (path === '/404' || path === '/404/' || path === '/404.html') {
       const response = await env.ASSETS.fetch(
         assetRequest(request, '/404.html'),
@@ -69,6 +82,7 @@ export default {
       );
     }
 
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    return withHeaders(response, {});
   },
 } satisfies ExportedHandler<Env>;

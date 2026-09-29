@@ -1,30 +1,40 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { buyNowMailto } from '../lib/constants';
 ---
 
 <BaseLayout
   title="Page Not Found — aipolyintelligence.com"
-  description="The page you were looking for could not be found. Explore aipolyintelligence.com — the premium domain for AI polyintelligence."
+  description="The page you were looking for could not be found. Explore aipolyintelligence.com — the premium domain for AI polyintelligence, available for acquisition."
   noindex={true}
 >
-  <main class="min-h-screen flex items-center justify-center px-6">
+  <main id="main-content" class="min-h-screen flex items-center justify-center px-6">
     <div class="text-center max-w-lg">
       <div
-        class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-white/5 border border-white/10 mb-8"
+        class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-[color:var(--color-surface)] border border-[color:var(--color-border)] mb-8"
       >
-        <span class="text-4xl font-display text-white/50">404</span>
+        <span class="text-4xl font-display text-[color:var(--color-muted)]">404</span>
       </div>
       <h1 class="text-3xl font-semibold tracking-tight mb-4">Page not found</h1>
-      <p class="text-white/60 mb-8">
-        The page you were looking for doesn't exist or has been moved. The domain
-        aipolyintelligence.com is available for acquisition.
+      <p class="text-[color:var(--color-muted)] mb-8">
+        The page you were looking for doesn't exist or has been moved.
+        <strong class="text-[color:var(--color-fg)]">aipolyintelligence.com</strong> is
+        available for acquisition.
       </p>
-      <a
-        href="/"
-        class="inline-flex items-center justify-center px-8 py-3.5 rounded-2xl bg-white text-[#0a0a0f] font-semibold hover:bg-white/90 transition-all"
-      >
-        Return Home
-      </a>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a
+          href="/"
+          class="inline-flex min-h-12 items-center justify-center px-8 py-3.5 rounded-2xl bg-[color:var(--color-fg)] text-[color:var(--color-bg)] font-semibold hover:opacity-90 transition-all"
+        >
+          Return Home
+        </a>
+        <a
+          href={buyNowMailto()}
+          class="inline-flex min-h-12 items-center justify-center px-8 py-3.5 rounded-2xl btn-primary"
+        >
+          Buy Domain
+        </a>
+      </div>
     </div>
   </main>
 </BaseLayout>

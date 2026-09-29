@@ -2,56 +2,78 @@
 import {
   SITE_URL,
   SITE_NAME,
+  DOMAIN_NAME,
+  DOMAIN_PRICE,
   HERO_IMAGE_URL,
   ACQUISITION_EMAIL,
+  SEO,
+  BRAND,
 } from '../lib/constants';
-
-const description =
-  'aipolyintelligence.com — The domain for the next evolution of artificial intelligence. A premium, forward-looking name for polyintelligent systems, advanced AI research, and the future of multi-form intelligence.';
 
 const webPage = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
-  name: `${SITE_NAME} — The Future of Polyintelligence — Premium Domain`,
-  description,
+  name: SEO.title,
+  description: SEO.description,
   url: `${SITE_URL}/`,
   inLanguage: 'en-US',
+  isPartOf: {
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+  },
   primaryImageOfPage: {
     '@type': 'ImageObject',
     url: HERO_IMAGE_URL,
     contentUrl: HERO_IMAGE_URL,
+    width: 1200,
+    height: 630,
   },
   about: {
-    '@type': 'Thing',
-    name: 'AI Polyintelligence',
-    description:
-      'Premium domain name asset for polyintelligent AI systems, advanced AI research, and multi-form intelligence.',
+    '@type': 'Product',
+    name: `${DOMAIN_NAME} domain name`,
+  },
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['h1', '.hero-price'],
   },
 };
 
 const organization = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: SITE_NAME,
+  name: BRAND,
+  alternateName: SITE_NAME,
   url: `${SITE_URL}/`,
   email: ACQUISITION_EMAIL,
-  logo: HERO_IMAGE_URL,
-  description,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${SITE_URL}/favicon.svg`,
+  },
+  description: SEO.description,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    email: ACQUISITION_EMAIL,
+    availableLanguage: ['English'],
+  },
 };
 
 const product = {
   '@context': 'https://schema.org',
   '@type': 'Product',
-  name: 'aipolyintelligence.com domain name',
+  name: `${DOMAIN_NAME} domain name`,
   description:
-    'Premium domain for AI polyintelligence — the next frontier beyond narrow AI. A rare, high-value asset for visionary AI research and development.',
+    'Premium .com domain for AI polyintelligence — a rare, high-value digital asset for visionary AI research, multi-agent systems, and next-generation intelligence brands.',
   category: 'Domain Name',
-  image: HERO_IMAGE_URL,
+  image: [HERO_IMAGE_URL],
   brand: {
     '@type': 'Brand',
-    name: 'aipolyintelligence.com',
+    name: DOMAIN_NAME,
   },
   sku: 'AIPOLY-DOMAIN-001',
+  mpn: 'AIPOLY-COM',
+  url: `${SITE_URL}/`,
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '5',
@@ -66,8 +88,9 @@ const product = {
         '@type': 'Person',
         name: 'Domain Valuation Expert',
       },
+      datePublished: '2026-07-01',
       reviewBody:
-        'Exceptional domain name for the emerging polyintelligence sector. Rare single-word .com with strong brandability and SEO positioning for next-generation AI ventures.',
+        'Exceptional domain name for the emerging polyintelligence sector. Rare brandable .com with strong positioning for next-generation AI ventures.',
       reviewRating: {
         '@type': 'Rating',
         ratingValue: '5',
@@ -78,14 +101,19 @@ const product = {
   ],
   offers: {
     '@type': 'Offer',
+    '@id': `${SITE_URL}/#offer`,
     availability: 'https://schema.org/InStock',
-    price: '199999',
+    price: String(DOMAIN_PRICE),
     priceCurrency: 'USD',
+    priceValidUntil: '2027-12-31',
+    itemCondition: 'https://schema.org/NewCondition',
+    url: `${SITE_URL}/#pricing`,
     seller: {
       '@type': 'Organization',
+      name: BRAND,
       email: ACQUISITION_EMAIL,
+      url: `${SITE_URL}/`,
     },
-    url: `mailto:${ACQUISITION_EMAIL}`,
     shippingDetails: {
       '@type': 'OfferShippingDetails',
       shippingRate: {
@@ -99,13 +127,13 @@ const product = {
           '@type': 'QuantitativeValue',
           minValue: 0,
           maxValue: 1,
-          unitCode: 'd',
+          unitCode: 'DAY',
         },
         transitTime: {
           '@type': 'QuantitativeValue',
           minValue: 0,
           maxValue: 0,
-          unitCode: 'd',
+          unitCode: 'DAY',
         },
       },
       shippingDestination: {
@@ -123,8 +151,74 @@ const product = {
     },
   },
 };
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: `${SITE_URL}/`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Premium Domains',
+      item: `${SITE_URL}/#pricing`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: DOMAIN_NAME,
+      item: `${SITE_URL}/`,
+    },
+  ],
+};
+
+const faq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: `Is ${DOMAIN_NAME} for sale?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `Yes. ${DOMAIN_NAME} is listed for acquisition at $${DOMAIN_PRICE.toLocaleString('en-US')} USD with Escrow.com-protected transfer and clean title.`,
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How does domain transfer work?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Transactions are completed through Escrow.com. After payment clears, the domain is pushed to your registrar account. Most transfers complete within 24–48 hours.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I make an offer below the asking price?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Serious offers are reviewed personally. Use Make Offer or Contact Agent — flexible terms may be available for qualified buyers.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What makes this a premium investment domain?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'It is a brandable .com that names an emerging AI paradigm — polyintelligence — giving the owner narrative ownership as the industry moves beyond narrow AI.',
+      },
+    },
+  ],
+};
 ---
 
 <script type="application/ld+json" set:html={JSON.stringify(webPage)} />
 <script type="application/ld+json" set:html={JSON.stringify(organization)} />
 <script type="application/ld+json" set:html={JSON.stringify(product)} />
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
+<script type="application/ld+json" set:html={JSON.stringify(faq)} />
