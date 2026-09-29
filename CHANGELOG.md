@@ -1,5 +1,11 @@
 # Changelog
 
+## [FIX]: Mobile nav hamburger — 2026-09-29
+
+- Header Buy Now / Make Offer now `lg+` only so they no longer collide with the hamburger on narrow viewports
+- Menu button uses `type="button"`, `preventDefault` / `stopPropagation`, and sits above the drawer
+- Mobile drawer starts below the sticky nav (`top-20`) so the toggle stays clickable
+
 ## [FEAT]: Optimization improvements — 2026-09-29
 
 ### Technical foundation
