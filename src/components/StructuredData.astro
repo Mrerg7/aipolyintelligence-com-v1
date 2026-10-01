@@ -10,6 +10,12 @@ import {
   BRAND,
 } from '../lib/constants';
 
+interface Props {
+  includeProduct?: boolean;
+}
+
+const { includeProduct = true } = Astro.props;
+
 const webPage = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -74,31 +80,12 @@ const product = {
   sku: 'AIPOLY-DOMAIN-001',
   mpn: 'AIPOLY-COM',
   url: `${SITE_URL}/`,
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5',
-    bestRating: '5',
-    worstRating: '1',
-    reviewCount: '1',
-  },
-  review: [
-    {
-      '@type': 'Review',
-      author: {
-        '@type': 'Person',
-        name: 'Domain Valuation Expert',
-      },
-      datePublished: '2026-07-01',
-      reviewBody:
-        'Exceptional domain name for the emerging polyintelligence sector. Rare brandable .com with strong positioning for next-generation AI ventures.',
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: '5',
-        bestRating: '5',
-        worstRating: '1',
-      },
-    },
-  ],
+  // Product snippets require one of: offers, review, or aggregateRating.
+  // offers-only is intentional: the visible page shows the $199,999 price, and
+  // self-submitted review/aggregateRating markup would be self-serving (against
+  // Google review-snippet policy and discarded), while shipping/return details
+  // are invalid for a digital domain-asset transfer (zero-day transit,
+  // finite-window returns with 0 days) and risk invalidating the whole Offer.
   offers: {
     '@type': 'Offer',
     '@id': `${SITE_URL}/#offer`,
@@ -113,41 +100,6 @@ const product = {
       name: BRAND,
       email: ACQUISITION_EMAIL,
       url: `${SITE_URL}/`,
-    },
-    shippingDetails: {
-      '@type': 'OfferShippingDetails',
-      shippingRate: {
-        '@type': 'MonetaryAmount',
-        value: '0.00',
-        currency: 'USD',
-      },
-      deliveryTime: {
-        '@type': 'ShippingDeliveryTime',
-        handlingTime: {
-          '@type': 'QuantitativeValue',
-          minValue: 0,
-          maxValue: 1,
-          unitCode: 'DAY',
-        },
-        transitTime: {
-          '@type': 'QuantitativeValue',
-          minValue: 0,
-          maxValue: 0,
-          unitCode: 'DAY',
-        },
-      },
-      shippingDestination: {
-        '@type': 'DefinedRegion',
-        addressCountry: 'US',
-      },
-    },
-    hasMerchantReturnPolicy: {
-      '@type': 'MerchantReturnPolicy',
-      returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-      returnMethod: 'https://schema.org/ReturnByMail',
-      returnFees: 'https://schema.org/FreeReturn',
-      applicableCountry: 'US',
-      merchantReturnDays: 0,
     },
   },
 };
@@ -219,6 +171,6 @@ const faq = {
 
 <script type="application/ld+json" set:html={JSON.stringify(webPage)} />
 <script type="application/ld+json" set:html={JSON.stringify(organization)} />
-<script type="application/ld+json" set:html={JSON.stringify(product)} />
+{includeProduct && <script type="application/ld+json" set:html={JSON.stringify(product)} />}
 <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
 <script type="application/ld+json" set:html={JSON.stringify(faq)} />

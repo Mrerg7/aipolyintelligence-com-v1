@@ -13,6 +13,7 @@ interface Props {
   description?: string;
   noindex?: boolean;
   ogType?: string;
+  includeProduct?: boolean;
 }
 
 const {
@@ -20,6 +21,7 @@ const {
   description = SEO.description,
   noindex = false,
   ogType = 'website',
+  includeProduct = false,
 } = Astro.props;
 
 const canonical = getCanonicalUrl(Astro.url.pathname);
@@ -120,7 +122,7 @@ const ogImage = HERO_IMAGE_URL;
       })();
     </script>
 
-    <StructuredData />
+    <StructuredData includeProduct={includeProduct && !noindex} />
   </head>
   <body class="bg-[var(--color-bg)] text-[var(--color-fg)] overflow-x-hidden antialiased text-base">
     <a
